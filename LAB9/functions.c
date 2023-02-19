@@ -260,11 +260,13 @@ enum firm findFirm(FILE *site)
 
     for (int i = 0; i < 3; i++)
     {
-        if (strcmp(str, *(Brends + i)) == 0)
+        if (str != NULL)
         {
-            return i;
+            if (strcmp(str, *(Brends + i)) == 0)
+            {
+                return i;
+            }
         }
-
     }
 
     return NOFIRM;
