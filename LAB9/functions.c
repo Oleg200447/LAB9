@@ -403,12 +403,9 @@ void deleteElement(struct Shoes**mas, int number,int *size)
         (*size)--;
 
 
-        struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
-        /*if (storer != *mas)
-            free(*mas);*/
+        struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));       
         if (storer != NULL)
         {
-            /* *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));*/
             *mas = storer;
         }
     }
@@ -678,7 +675,10 @@ void sortTwoField(struct Shoes* mas, int* size)
         break;
     case 2:
         sortPrice(mas, *size);
+        break; 
+    default:
         break;
+
     }
 
     switch (choise2)
@@ -691,6 +691,8 @@ void sortTwoField(struct Shoes* mas, int* size)
         break;
     case 2:
         sortPriceAfterSort(mas, *size, choise1);
+        break;
+    default:
         break;
     }
     

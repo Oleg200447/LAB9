@@ -33,7 +33,7 @@ int main()
                 free(menu);
                 return 0;
             }
-            menu[(task_choise - 1)](mas, &num_shoes);
+            menu[task_choise - 1](mas, &num_shoes);
 
             printf("\nDo you want to continue?(Yes-1/No-0):");
             chekerForContinue(&choise);
