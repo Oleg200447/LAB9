@@ -693,7 +693,10 @@ void deleteElementMenu(struct Shoes* mas, int* size)
     printf("What pair you want delete?\nYour choise(1-%d):",*size);
     correctChoiseDelete(&num, *size);
 
-    deleteElement(&mas, num, size);
+    if (mas != NULL)
+    {
+        deleteElement(&mas, num, size);
+    }
 
     system("cls");
     showCatalog(mas, size);
