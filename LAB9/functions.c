@@ -76,7 +76,7 @@ char* memoryForNames(int size)
 int reverseNum(int num1, int num_size)
 {
     int num2 = 0;
-    int storer1 = 0, storer2 = 0;
+    int storer1 = 0;
 
     for (int i = 0, j = num_size - 1; i <= num_size; j--, i++)
     {
@@ -88,7 +88,20 @@ int reverseNum(int num1, int num_size)
     return num2;
 }
 
+int chekerEndSite(FILE* site)
+{
+    fgetc(site);
 
+    if (!feof(site))
+    {
+        return 0;
+        fseek(site, -1, SEEK_CUR);
+    }
+    else
+    {
+        return 1;
+    }
+}
 
 int numOfShoes( )
 {
@@ -110,6 +123,12 @@ int numOfShoes( )
         while (!feof(site))
         {
             int cheker = 0;
+
+            /*if (chekerEndSite(site) == 1)
+            {
+                break;
+            }*/
+
             char storer = fgetc(site);
 
             if (storer == *class_site)

@@ -30,6 +30,7 @@ void menuCorrect(int* task);
 
 void chekerForContinue(int* num);
 
+int chekerEndSite(FILE* site);
 
 
 void showCatalog(struct Shoes* mas, int *size);
