@@ -262,10 +262,11 @@ enum firm findFirm(FILE *site)
     {      
          if (strcmp(str, *(Brends + i)) == 0)
          {
+             free(str);
             return i;
          }   
     }
-
+    free(str);
     return NOFIRM;
 }
 
@@ -356,6 +357,7 @@ void showCatalog(struct Shoes* mas,int* size)
     for (int i = 0; i < *size; i++)
     {
         printf("%d.\t", i+1);
+        if(mas!=NULL)
         fputs(mas[i].model, stdout);
         if (strlen(mas[i].model) <= 7)
             printf("\t\t\t\t\t\t");
@@ -374,7 +376,7 @@ void showCatalog(struct Shoes* mas,int* size)
 
         
         const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)"};
-        if(BrendForPrint!=NULL)
+        if(mas!=NULL)
         printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
         
@@ -386,7 +388,7 @@ void deleteElement(struct Shoes** mas, int number,int *size)
 {
     for (int i = number; i < *size; i++)
     {
-        if((*mas+i)!=NULL)
+        if(mas!=NULL)
         *(*mas + i - 1) = *(*mas + i);
     }
 
