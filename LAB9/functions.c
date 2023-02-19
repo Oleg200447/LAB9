@@ -357,30 +357,32 @@ void showCatalog(struct Shoes* mas,int* size)
     for (int i = 0; i < *size; i++)
     {
         printf("%d.\t", i+1);
-        if(mas!=NULL)
-        fputs(mas[i].model, stdout);
-        if (strlen(mas[i].model) <= 7)
-            printf("\t\t\t\t\t\t");
-        if(strlen(mas[i].model) >= 16 && strlen(mas[i].model) < 24)
-            printf("\t\t\t\t");
-        if (strlen(mas[i].model) < 16 && strlen(mas[i].model) > 7)
-            printf("\t\t\t\t\t");
-        if (strlen(mas[i].model) >=24 && strlen(mas[i].model) < 27)
-            printf("\t\t\t");
-        if (strlen(mas[i].model) >= 27 && strlen(mas[i].model) < 30)
-            printf("\t\t\t");
-        if (strlen(mas[i].model) >= 30 && strlen(mas[i].model) <40)
-            printf("\t\t");
-        if (strlen(mas[i].model) >= 40)
-            printf("\t");
+        if (mas != NULL)
+        {
+            fputs(mas[i].model, stdout);
+            if (strlen(mas[i].model) <= 7)
+                printf("\t\t\t\t\t\t");
+            if (strlen(mas[i].model) >= 16 && strlen(mas[i].model) < 24)
+                printf("\t\t\t\t");
+            if (strlen(mas[i].model) < 16 && strlen(mas[i].model) > 7)
+                printf("\t\t\t\t\t");
+            if (strlen(mas[i].model) >= 24 && strlen(mas[i].model) < 27)
+                printf("\t\t\t");
+            if (strlen(mas[i].model) >= 27 && strlen(mas[i].model) < 30)
+                printf("\t\t\t");
+            if (strlen(mas[i].model) >= 30 && strlen(mas[i].model) < 40)
+                printf("\t\t");
+            if (strlen(mas[i].model) >= 40)
+                printf("\t");
 
-        
-        const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)"};
-        if(mas!=NULL)
-        printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
-        
-        printf("%dð.\n\n", mas[i].price);       
+            const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)" };
+            if (mas != NULL)
+                printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
+
+
+            printf("%dð.\n\n", mas[i].price);
+        }
     }
 }
 
@@ -394,10 +396,13 @@ void deleteElement(struct Shoes** mas, int number,int *size)
 
     (*size)--;
 
-    struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
-    if (storer != NULL)
+    if (mas != NULL)
     {
-        *mas = storer;
+        struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
+        if (storer != NULL)
+        {
+            *mas = storer;
+        }
     }
 }
 
