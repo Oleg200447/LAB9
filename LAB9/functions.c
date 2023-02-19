@@ -376,7 +376,7 @@ void showCatalog(struct Shoes* mas,int* size)
                 printf("\t");
 
 
-            const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)" };
+            const static char* BrendForPrint[4] = { "Adidas","Nike","Puma","No brend(pal)" };
             printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
 
