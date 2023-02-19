@@ -377,8 +377,7 @@ void showCatalog(struct Shoes* mas,int* size)
 
 
             const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)" };
-            if (mas != NULL)
-                printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
+            printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
 
             printf("%dð.\n\n", mas[i].price);
@@ -388,10 +387,11 @@ void showCatalog(struct Shoes* mas,int* size)
 
 void deleteElement(struct Shoes** mas, int number,int *size)
 {
-    for (int i = number; i < *size; i++)
+
+    for (int i = number-1; i < *size-1; i++)
     {
         if(mas!=NULL)
-        *(*mas + i - 1) = *(*mas + i);
+        *(*mas + i) = *(*mas + i+1);
     }
 
     (*size)--;
@@ -404,6 +404,7 @@ void deleteElement(struct Shoes** mas, int number,int *size)
             *mas = storer;
         }
     }
+
 }
 
 void sortPrice(struct Shoes* mas, int size)
