@@ -390,28 +390,26 @@ void showCatalog(struct Shoes* mas,int* size)
 
 void deleteElement(struct Shoes**mas, int number,int *size)
 {
-
-    for (int i = number; i <= *size; i++)
-    {
-        if (mas != NULL && (*mas+i)!=NULL && i>1&&i<60)
-            *(*mas+(i-1)) = *(*mas+i);
-    }
-
-    (*size)--;
-
     if (mas != NULL)
     {
+        for (int i = number; i <= *size; i++)
+        {
+            if (mas != NULL && (*mas + i) != NULL && i > 1 && i < 60)
+                *(*mas + (i - 1)) = *(*mas + i);
+        }
+
+        (*size)--;
+
+
         struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
         /*if (storer != *mas)
             free(*mas);*/
         if (storer != NULL)
-        {   
-            *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));
+        {
+            /*  *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));*/
             *mas = storer;
         }
     }
-
-    
 }
 
 void sortPrice(struct Shoes* mas, int size)
