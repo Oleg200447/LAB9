@@ -402,8 +402,8 @@ void deleteElement(struct Shoes**mas, int number,int *size)
     if (mas != NULL)
     {
         struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
-        if (storer != *mas)
-            free(*mas);
+        /*if (storer != *mas)
+            free(*mas);*/
         if (storer != NULL)
         {   
             *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));
