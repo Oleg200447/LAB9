@@ -389,10 +389,10 @@ void showCatalog(struct Shoes* mas,int* size)
 void deleteElement(struct Shoes** mas, int number,int *size)
 {
 
-    for (int i = number-1; i < *size-1; i++)
+    for (int i = number; i < *size; i++)
     {
-        if(mas!=NULL)
-        *(*mas + i) = *(*mas + i+1);
+        if(mas!=NULL&&(i-1)>0)
+        *(*mas + i-1) = *(*mas +i);
     }
 
     (*size)--;
