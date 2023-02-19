@@ -259,14 +259,11 @@ enum firm findFirm(FILE *site)
     char* str = findStr(site);
 
     for (int i = 0; i < 3; i++)
-    {
-        if (str != NULL)
-        {
-            if (strcmp(str, *(Brends + i)) == 0)
-            {
-                return i;
-            }
-        }
+    {      
+         if (strcmp(str, *(Brends + i)) == 0)
+         {
+            return i;
+         }   
     }
 
     return NOFIRM;
