@@ -258,7 +258,7 @@ enum firm findFirm(FILE *site)
     const static char* Brends[] = { "adidas","Nike","PUMA"};
     char* str = findStr(site);
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 3; i++)
     {
         if (strcmp(str, *(Brends + i)) == 0)
         {
@@ -319,6 +319,7 @@ char* findName(FILE* site)
     storer = fgetc(site);
     while (storer != '<')
     {
+        if(storer!=NULL)
         *(mas + size) = storer;
         size++;
         storer = fgetc(site);
@@ -373,9 +374,12 @@ void showCatalog(struct Shoes* mas,int* size)
         if (strlen(mas[i].model) >= 40)
             printf("\t");
 
+        
         const static char* BrendForPrint[] = { "Adidas","Nike","Puma","No brend(pal)"};
+        if(BrendForPrint!=NULL)
         printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
+        
         printf("%dð.\n\n", mas[i].price);       
     }
 }
@@ -384,6 +388,7 @@ void deleteElement(struct Shoes** mas, int number,int *size)
 {
     for (int i = number; i < *size; i++)
     {
+        if((*mas+i)!=NULL)
         *(*mas + i - 1) = *(*mas + i);
     }
 
