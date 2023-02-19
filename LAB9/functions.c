@@ -394,7 +394,7 @@ void deleteElement(struct Shoes**mas, int number,int *size)
     {
         if (number < 60 && number>0)
         {
-            for (int i = number; i <= *size; i++)
+            for (int i = number; i < *size; i++)
             {
                 mas[0][i - 1] = mas[0][i];
             }
