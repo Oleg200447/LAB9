@@ -394,7 +394,7 @@ void deleteElement(struct Shoes**mas, int number,int *size)
     {
         for (int i = number; i <= *size; i++)
         {
-            if (mas != NULL && (*mas + i) != NULL && i > 1 && i < 60)
+            if (*mas != NULL && (*mas + i) != NULL && i > 1 && i < 60)
                 *(*mas + (i - 1)) = *(*mas + i);
         }
 
@@ -406,7 +406,7 @@ void deleteElement(struct Shoes**mas, int number,int *size)
             free(*mas);*/
         if (storer != NULL)
         {
-            /*  *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));*/
+            /* *mas = (struct Shoes*)calloc(*size, sizeof(struct Shoes));*/
             *mas = storer;
         }
     }
