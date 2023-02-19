@@ -35,7 +35,7 @@ void chekerForContinue(int* num);
 void showCatalog(struct Shoes* mas, int *size);
 
 
-void deleteElement(struct Shoes** mas, int number, int *size);
+void deleteElement(struct Shoes* mas, int number, int *size);
 
 void deleteElementMenu(struct Shoes* mas, int* size);
 

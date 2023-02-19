@@ -388,23 +388,23 @@ void showCatalog(struct Shoes* mas,int* size)
     }
 }
 
-void deleteElement(struct Shoes** mas, int number,int *size)
+void deleteElement(struct Shoes* mas, int number,int *size)
 {
 
     for (int i = number; i < *size; i++)
     {
-        if (mas != NULL && (*mas+i)!=NULL && i>1&&i<60)
-            *(*mas+(i-1)) = *(*mas+i);
+        if (mas != NULL && (mas+i)!=NULL && i>1&&i<60)
+            *(mas+(i-1)) = *(mas+i);
     }
 
     (*size)--;
 
     if (mas != NULL)
     {
-        struct Shoes* storer = (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
+        struct Shoes* storer = (struct Shoes*)realloc(mas, (*size) * sizeof(struct Shoes));
         if (storer != NULL)
         {
-            *mas = storer;
+            mas = storer;
         }
     }
 
@@ -704,7 +704,7 @@ void deleteElementMenu(struct Shoes* mas, int* size)
 
     if (mas != NULL)
     {
-        deleteElement(&mas, num, size);
+        deleteElement(mas, num, size);
     }
 
     system("cls");
