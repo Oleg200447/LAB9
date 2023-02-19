@@ -2,7 +2,9 @@
 #include<stdlib.h>
 #include<string.h>
 #include"Header.h"
+
 #define KB 1024
+#define NUM_BRENDS 4
 
 void chekerForContinue(int* num)
 {
@@ -376,8 +378,8 @@ void showCatalog(struct Shoes* mas,int* size)
                 printf("\t");
 
 
-            const static char* BrendForPrint[4] = { "Adidas","Nike","Puma","No brend(pal)" };
-            if(mas[i].brend>=0 && mas[i].brend<=3)
+            const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","No brend(pal)" };
+            if(mas[i].brend>=0 && mas[i].brend< NUM_BRENDS)
             printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
 
@@ -391,7 +393,7 @@ void deleteElement(struct Shoes** mas, int number,int *size)
 
     for (int i = number; i < *size; i++)
     {
-        if(mas!=NULL&&(i-1)>0)
+        if(mas!=NULL&&(*mas + i)>0)
         *(*mas + i-1) = *(*mas +i);
     }
 
