@@ -20,7 +20,7 @@ void getFirms(FILE* site, struct Shoes* mas);
 
 void getName(FILE* site, struct Shoes* mas);
 
-char* findName(FILE* site);
+char* findName(FILE* site, int counter, struct Shoes* mas);
 
 char* memoryForNames(int size);
 

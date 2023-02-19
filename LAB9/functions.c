@@ -260,7 +260,7 @@ enum firm findFirm(FILE *site)
 
     for (int i = 0; i < 3; i++)
     {
-        if (*str != NULL)
+        if (str != NULL)
         {
             if (strcmp(str, *(Brends + i)) == 0)
             {
@@ -296,14 +296,14 @@ void getFirms(FILE* site, struct Shoes* mas)
     }
 }
 
-char* findName(FILE* site)
+char* findName(FILE* site,int counter, struct Shoes* mas)
 {
     char storer = fgetc(site);
     while (!((storer >= 'a' && storer <= 'z') || (storer >= 'A' && storer <= 'Z')||(storer>='0'&&storer<='9')))
         storer = fgetc(site);
    
     fseek(site, -1, SEEK_CUR);
-    char* mas;
+    char* str;
     fpos_t pos;
     fgetpos(site, &pos);
     int size = 0;
@@ -314,18 +314,19 @@ char* findName(FILE* site)
         storer = fgetc(site);
     }
 
-    mas = memoryForNames(size);
+    str = memoryForNames(size);
+    mas[counter].model= memoryForNames(size);
     fsetpos(site, &pos);
 
     storer = fgetc(site);
     for(int i=0;i<size-1;i++)
     {
-        *(mas + i) = storer;
+        *(str + i) = storer;
 
         storer = fgetc(site);
     }
     
-    return mas;
+    return str;
 }
 
 void getName(FILE* site, struct Shoes* mas)
@@ -345,7 +346,7 @@ void getName(FILE* site, struct Shoes* mas)
         {
             if (chekerForClass(type_name_class, site) == strlen(type_name_class))
             {
-                mas[num_shoes_counter].model = findName(site);
+                mas[num_shoes_counter].model = findName(site, num_shoes_counter,mas);
                 num_shoes_counter++;             
             }
         }
