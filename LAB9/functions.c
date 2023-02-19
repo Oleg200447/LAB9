@@ -377,6 +377,7 @@ void showCatalog(struct Shoes* mas,int* size)
 
 
             const static char* BrendForPrint[4] = { "Adidas","Nike","Puma","No brend(pal)" };
+            if(mas[i].brend>=0 && mas[i].brend<=3)
             printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
 
@@ -405,6 +406,7 @@ void deleteElement(struct Shoes** mas, int number,int *size)
         }
     }
 
+    
 }
 
 void sortPrice(struct Shoes* mas, int size)
