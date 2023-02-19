@@ -315,15 +315,13 @@ char* findName(FILE* site)
     }
 
     mas = memoryForNames(size);
-    size = 0;
     fsetpos(site, &pos);
 
     storer = fgetc(site);
-    while (storer != '<')
+    for(int i=0;i<size-1;i++)
     {
-        if(storer!=NULL)
-        *(mas + size) = storer;
-        size++;
+        *(mas + i) = storer;
+
         storer = fgetc(site);
     }
     
