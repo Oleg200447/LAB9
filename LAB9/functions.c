@@ -260,7 +260,7 @@ enum firm findFirm(FILE *site)
 
     for (int i = 0; i < 3; i++)
     {
-        if (str != NULL)
+        if (*str != NULL)
         {
             if (strcmp(str, *(Brends + i)) == 0)
             {
