@@ -4,7 +4,7 @@ int levelTen(int degree);
 
 int reverseNum(int num1, int num_size);
 
-int numOfShoes();
+int numOfShoes(void);
 
 struct Shoes* memoryForCatalog(int size);
 
@@ -32,47 +32,26 @@ void chekerForContinue(int* num);
 
 int chekerEndSite(FILE* site);
 
-
-void showCatalog(struct Shoes* mas, int *size);
+void showCatalog(int *size, struct Shoes* mas);
 
 
 void deleteElement(struct Shoes* *mas, int number, int *size);
 
-void deleteElementMenu(struct Shoes* mas, int* size);
+void deleteElementMenu( int* size, struct Shoes** mas);
 
 
-
-void sortPrice(struct Shoes* mas, int size);
-
-void sortName(struct Shoes* mas, int size);
-
-void sortBrend(struct Shoes* mas, int size);
+void sortOneFieldMenu( int* size, struct Shoes* mas);
+void sortOneField(struct Shoes* mas, int size, int choise1);
 
 
+void sortTwoFieldMenu(int* size, struct Shoes* mas);
 
-void sortPriceAfterSort(struct Shoes* mas, int size, int sortBefore);
+void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2);
 
-void changePriceAfterBrend(struct Shoes* mas, int counter);
+void addElementMenu(int* size, struct Shoes** mas);
 
-void changePriceAfterName(struct Shoes* mas, int counter);
+int variantToSort(int field, int counter, struct Shoes* mas);
 
-void sortBrendAfterSort(struct Shoes* mas, int size, int sortBefore);
+enum firm inputBrend();
 
-void changeBrendAfterName(struct Shoes* mas, int counter);
-
-void changeBrendAfterPrice(struct Shoes* mas, int counter);
-
-void sortNameAfterSort(struct Shoes* mas, int size, int sortBefore);
-
-void changeNameAfterBrend(struct Shoes* mas, int counter);
-
-void changeNameAfterPrice(struct Shoes* mas, int counter);
-
-
-void sortOneField(struct Shoes* mas, int* size);
-
-void sortTwoField(struct Shoes* mas, int* size);
-
-void addPair(struct Shoes* mas, int* size);
-
-void memoryNew(struct Shoes** mas, int* size);
+enum firm ChekerBrend(char* str);

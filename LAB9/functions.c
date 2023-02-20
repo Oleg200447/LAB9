@@ -6,6 +6,23 @@
 #define KB 1024
 #define NUM_BRENDS 4
 
+#define EQUAL 2
+#define NEED_CHANGE 1
+#define NO_CHANGE 0 
+
+#define FIRST_FIELD 0
+#define SECOND_FIELD 1
+#define THIRD_FIELD 2
+
+void chekerPrice(int* num)
+{
+    while ((scanf_s("%d", num)) != 1 || getchar() != '\n' || *num < 0)
+    {
+        printf("Intput correct price:");
+        rewind(stdin);
+    }
+}
+
 void chekerForContinue(int* num)
 {
     while ((scanf_s("%d", num)) != 1 || getchar() != '\n' || *num < 0 || *num > 1)
@@ -26,7 +43,7 @@ void correctChoiseForSort(int* num)
 
 void menuCorrect(int* task)
 {
-    while ((scanf_s("%d", task)) != 1 || *task < 1 || *task>5 || getchar() != '\n')
+    while ((scanf_s("%d", task)) != 1 || *task < 1 || *task>6 || getchar() != '\n')
     {
         printf("Make right choise(1-5):");
         rewind(stdin);
@@ -50,6 +67,15 @@ void correctChoiseDelete(int *num,int size)
     while ((scanf_s("%d", num)) != 1 || *num < 1 || *num>size || getchar() != '\n')
     {
         printf("Make right choise(1-%d):",size);
+        rewind(stdin);
+    }
+}
+
+void correctChoiseBrend(int* num, int num_brends)
+{
+    while ((scanf_s("%d", num)) != 1 || *num < 1 || *num>(num_brends -1) || getchar() != '\n')
+    {
+        printf("Make right choise(0-%d):", num_brends-1);
         rewind(stdin);
     }
 }
@@ -88,7 +114,7 @@ int reverseNum(int num1, int num_size)
     return num2;
 }
 
-int chekerEndSite(FILE* site)
+/*nt chekerEndSite(FILE* site)
 {
     fgetc(site);
 
@@ -101,9 +127,9 @@ int chekerEndSite(FILE* site)
     {
         return 1;
     }
-}
+}*/
 
-int numOfShoes( )
+int numOfShoes(void)
 {
     FILE* site;
     errno_t err = fopen_s(&site, "C:\\Users\\Oleg\\Desktop\\Project\\site2.html", "r+");
@@ -187,7 +213,7 @@ enum firm {
     ADIDAS,
     NIKE,
     PUMA,
-    NOFIRM
+    NO_BREND
 };
 
 
@@ -283,12 +309,12 @@ enum firm findFirm(FILE *site)
     {      
          if (strcmp(str, *(Brends + i)) == 0)
          {
-             free(str);
+            free(str);
             return i;
          }   
     }
     free(str);
-    return NOFIRM;
+    return NO_BREND;
 }
 
 void getFirms(FILE* site, struct Shoes* mas)
@@ -361,7 +387,7 @@ void getName(FILE* site, struct Shoes* mas)
     {
         char storer = fgetc(site);
 
-        if (storer == *type_name_class) // <
+        if (storer == *type_name_class) // x
         {
             if (chekerForClass(type_name_class, site) == strlen(type_name_class))
             {
@@ -372,7 +398,7 @@ void getName(FILE* site, struct Shoes* mas)
     }
 }
 
-void showCatalog(struct Shoes* mas,int* size)
+void showCatalog(/*struct Shoes* mas*/int* size, struct Shoes* mas)
 {
     printf("\tName:\t\t\t\t\t\tBrend:\t\t\tPrice:\n\n");
     for (int i = 0; i < *size; i++)
@@ -396,8 +422,7 @@ void showCatalog(struct Shoes* mas,int* size)
             if (strlen(mas[i].model) >= 40)
                 printf("\t");
 
-
-            const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","No brend(pal)" };
+            const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","No brend" };
             if(mas[i].brend>=0 && mas[i].brend< NUM_BRENDS)
             printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
@@ -411,12 +436,9 @@ void deleteElement(struct Shoes**mas, int number,int *size)
 {
     if (mas != NULL)
     {
-        if (number < 60 && number>0)
+        for (int i = number; i < *size; i++)
         {
-            for (int i = number; i < *size; i++)
-            {
-                mas[0][i - 1] = mas[0][i];
-            }
+           mas[0][i - 1] = mas[0][i];
         }
 
         (*size)--;
@@ -426,23 +448,6 @@ void deleteElement(struct Shoes**mas, int number,int *size)
         if (storer != NULL)
         {
             *mas = storer;
-        }
-    }
-}
-
-void sortPrice(struct Shoes* mas, int size)
-{
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size-1; j++)
-        {
-            if (mas[j].price > mas[j + 1].price)
-            {
-                struct Shoes storer = mas[j];
-                mas[j] = mas[j + 1];
-                mas[j + 1] = storer;
-            }
-
         }
     }
 }
@@ -457,189 +462,12 @@ int changeNeed(char* str1, char* str2)
     for (int i = 0; i < size+1; i++)
     {
         if (*(str1 + i) > *(str2 + i))
-            return 1;
+            return NEED_CHANGE;
         if (*(str1 + i) < *(str2 + i))
-            return 0;
+            return NO_CHANGE;
     }
-    return 0;
+    return EQUAL;
 }
-
-void sortName(struct Shoes* mas, int size)
-{
-
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (changeNeed(mas[j].model, mas[j + 1].model) == 1)
-            {
-                struct Shoes storer = mas[j];
-                mas[j] = mas[j + 1];
-                mas[j + 1] = storer;
-            }
-        }
-    }
-}
-
-void sortBrend(struct Shoes* mas, int size)
-{
-
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (mas[j].brend> mas[j+1].brend)
-            {
-                struct Shoes storer = mas[j];
-                mas[j] = mas[j + 1];
-                mas[j + 1] = storer;
-            }
-        }
-    }
-}
-
-void changePriceAfterBrend(struct Shoes* mas,int counter)
-{
-    if (mas[counter].brend == mas[counter + 1].brend)
-    {
-        if (mas[counter].price > mas[counter+ 1].price)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-
-}
-
-void changePriceAfterName(struct Shoes* mas, int counter)
-{
-    if (strcmp(mas[counter].model, mas[counter + 1].model)==0)
-    {
-        if (mas[counter].price > mas[counter + 1].price)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-
-}
-
-
-void sortPriceAfterSort(struct Shoes* mas, int size, int sortBefore)
-{
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (sortBefore == 0)
-            {
-                changePriceAfterBrend(mas, j);               
-            }
-            if (sortBefore == 1)
-            {
-                changePriceAfterName(mas, j);
-            }
-        }
-    }
-}
-
-
-void changeBrendAfterPrice(struct Shoes* mas, int counter)
-{
-    if (mas[counter].price == mas[counter + 1].price)
-    {
-        if (mas[counter].brend > mas[counter + 1].brend)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-
-}
-
-void changeBrendAfterName(struct Shoes* mas, int counter)
-{
-    if (strcmp(mas[counter].model, mas[counter + 1].model) == 0)
-    {
-        if (mas[counter].brend > mas[counter+ 1].brend)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-}
-
-
-void sortBrendAfterSort(struct Shoes* mas, int size, int sortBefore)
-{
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (sortBefore == 1)
-            {
-                changeBrendAfterName(mas, j);
-            }
-            if (sortBefore == 2)
-            {
-                changeBrendAfterPrice(mas, j);
-            }
-        }
-    }
-}
-
-
-
-
-
-void changeNameAfterPrice(struct Shoes* mas, int counter)
-{
-    if (mas[counter].price == mas[counter + 1].price)
-    {
-        if (changeNeed(mas[counter].model, mas[counter + 1].model) == 1)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-}
-
-void changeNameAfterBrend(struct Shoes* mas, int counter)
-{
-    if (mas[counter].brend == mas[counter + 1].brend)
-    {
-        if (changeNeed(mas[counter].model, mas[counter + 1].model) == 1)
-        {
-            struct Shoes storer = mas[counter];
-            mas[counter] = mas[counter + 1];
-            mas[counter + 1] = storer;
-        }
-    }
-}
-
-void sortNameAfterSort(struct Shoes* mas, int size, int sortBefore)
-{
-    for (int i = 0; i < size; i++)
-    {
-        for (int j = 0; j < size - 1; j++)
-        {
-            if (sortBefore == 0)
-            {
-                changeNameAfterBrend(mas, j);
-            }
-            if (sortBefore == 2)
-            {
-                changeNameAfterPrice(mas, j);
-            }
-        }
-    }
-}
-
 
 void getInfo(struct Shoes* mas)
 {
@@ -659,23 +487,181 @@ void getInfo(struct Shoes* mas)
     }
 }
 
-
-
-void sortOneField(struct Shoes* mas, int* size)
+void sortOneField(struct Shoes* mas,int size,int choise1)
 {
-    int choise1 = 0;
-    printf("By what field do you want to sort?(Brend(0)/Name(1)/Price(2)).\nYour choise:");
-    correctChoiseForSort(&choise1);
-    if (choise1 == 0)
-        sortBrend(mas, *size);
-    if (choise1 == 1)
-        sortName(mas, *size);
-    if (choise1 == 2)
-        sortPrice(mas, *size);
-    showCatalog(mas, size);
+    for (int i = 0; i < (size); i++)
+        for (int j = 0; j < size - 1; j++)
+            if (variantToSort(choise1, j, mas) == 1 )
+            {
+                struct Shoes storer = mas[j];
+                mas[j] = mas[j + 1];
+                mas[j + 1] = storer;
+            }
 }
 
-void sortTwoField(struct Shoes* mas, int* size)
+void sortOneFieldMenu( int* size, struct Shoes* mas)
+{
+    int choise = 0;
+    printf("By what field do you want to sort?(Brend(0)/Name(1)/Price(2)).\nYour choise:");
+    correctChoiseForSort(&choise);
+
+    sortOneField(mas, *size, choise);
+
+    showCatalog(size,mas);
+}
+
+
+void deleteElementMenu( int* size, struct Shoes**mas)
+{
+    int num = 0;
+    printf("What pair you want delete?\nYour choise(1-%d):",*size);
+    correctChoiseDelete(&num, *size);
+
+    if (*mas != NULL)
+    {
+        deleteElement(mas, num, size);
+    }
+
+    system("cls");
+    showCatalog(size,*mas);
+}
+
+char* inputStr()
+{
+   char *str= (char*)calloc(KB, sizeof(char));
+   if (str != NULL)
+   {
+       do {
+           printf("Input name: ");
+           rewind(stdin);
+
+           gets_s(str, KB - 1);
+           rewind(stdin);
+       } while (strlen(str) < 1);
+  
+       
+       if (str[0] <= 'z' && str[0] >= 'a')
+       {
+           str[0] = str[0] - ('a' - 'A');
+       }
+
+       char*storer= (char*)realloc(str, (strlen(str) + 1) * sizeof(char));
+       if (storer != NULL)
+       {
+           str = storer;
+       }
+   }
+   return str;
+}
+
+void addElementMenu( int* size, struct Shoes** mas)
+{  
+    (*size)++;
+    struct Shoes* storer= (struct Shoes*)realloc(*mas, (*size) * sizeof(struct Shoes));
+    if (storer != NULL)
+    {
+        *mas = storer;
+    }
+
+    if (mas[0] != NULL)
+    {
+        mas[0][*size - 1].model = inputStr();
+
+        printf("Input price: ");
+        chekerPrice(&mas[0][*size - 1].price);
+
+
+        printf("Input brend: ");
+        mas[0][*size - 1].brend = inputBrend();
+
+    }
+}
+
+enum firm inputBrend()
+{
+    char* str = (char*)calloc(KB, sizeof(char));
+    if (str != NULL)
+    {
+        do {
+            rewind(stdin);
+            gets_s(str, KB - 1);
+            rewind(stdin);
+        } while (strlen(str) < 1);
+
+        char* storer = (char*)realloc(str, (strlen(str) + 1) * sizeof(char));
+        if (storer != NULL)
+        {
+            str = storer;
+        }
+    }
+
+    return ChekerBrend(str);
+}
+
+enum firm ChekerBrend(char* str)
+{
+    const static char* BrendForInput[NUM_BRENDS - 1] = { "adidas","nike","puma" };
+
+    for (int i = 0; i <NUM_BRENDS-1; i++)
+    {
+        int cheker = 0;
+        for (int j = 0; j < strlen(BrendForInput[i]); j++)
+        {
+            char storer = BrendForInput[i][j] - ('a' - 'A');
+            if (BrendForInput[i][j] == str[j] || (str[j] == storer))
+            {
+                cheker++;
+            }
+            if (cheker == strlen(BrendForInput[i]))
+                return i;
+        }
+        
+    }
+
+    return NO_BREND;
+}
+
+int variantToSort(int field, int counter, struct Shoes* mas)
+{
+    if (field == FIRST_FIELD)
+    {
+        if (mas[counter].brend > mas[counter + 1].brend)
+        return NEED_CHANGE;
+        if (mas[counter].brend == mas[counter + 1].brend)
+        return EQUAL;
+    }
+
+    if (field == SECOND_FIELD)
+    {
+        return changeNeed(mas[counter].model, mas[counter+1].model);
+
+    }
+
+    if (field == THIRD_FIELD)
+    {
+        if (mas[counter].price > mas[counter + 1].price)
+            return NEED_CHANGE;
+        if (mas[counter].price == mas[counter + 1].price)
+            return EQUAL;
+
+    }
+
+    return NO_CHANGE;
+}
+
+void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2)
+{
+    for (int i = 0; i < (size); i++)
+        for (int j = 0; j < size - 1; j++)
+            if (variantToSort(choise1, j, mas) == 1 || (variantToSort(choise1, j, mas) == 2 && variantToSort(choise2, j, mas) == 1))
+            {
+                struct Shoes storer = mas[j];
+                mas[j] = mas[j + 1];
+                mas[j + 1] = storer;
+            }
+}
+
+void sortTwoFieldMenu(/*struct Shoes* mas*/ int* size, struct Shoes* mas)
 {
     int choise1 = 0, choise2 = 0;
     printf("Choose first and second fields:(Brend(0)/Name(1)/Price(2)).\n");
@@ -684,54 +670,9 @@ void sortTwoField(struct Shoes* mas, int* size)
     printf("Second choise:");
     correctChoiseForSortTwoFields(choise1, &choise2);
 
-    switch (choise1)
-    {
-    case 0:
-        sortBrend(mas, *size);
-        break;
-    case 1:
-        sortName(mas, *size);
-        break;
-    case 2:
-        sortPrice(mas, *size);
-        break; 
-    default:
-        break;
-
-    }
-
-    switch (choise2)
-    {
-    case 0:
-        sortBrendAfterSort(mas, *size, choise1);
-        break;
-    case 1:
-        sortNameAfterSort(mas, *size, choise1);
-        break;
-    case 2:
-        sortPriceAfterSort(mas, *size, choise1);
-        break;
-    default:
-        break;
-    }
-    
-    system("cls");
-    showCatalog(mas, size);
-}
-
-
-void deleteElementMenu(struct Shoes* mas, int* size)
-{
-    int num = 0;
-    printf("What pair you want delete?\nYour choise(1-%d):",*size);
-    correctChoiseDelete(&num, *size);
-
-    if (mas != NULL)
-    {
-        deleteElement(&mas, num, size);
-    }
+    sortTwoField(mas, *size, choise1, choise2);
 
     system("cls");
-    showCatalog(mas, size);
+    showCatalog(size,mas);
 }
 
