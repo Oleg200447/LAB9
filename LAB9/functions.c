@@ -608,7 +608,7 @@ enum firm ChekerBrend(char* str)
         for (int j = 0; j < strlen(BrendForInput[i]); j++)
         {
             char storer = BrendForInput[i][j] - ('a' - 'A');
-            if (BrendForInput[i][j] == str[j] || (str[j] == storer))
+            if (str!=NULL && (BrendForInput[i][j] == str[j] || (str[j] == storer)))
             {
                 cheker++;
             }
