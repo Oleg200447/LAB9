@@ -40,11 +40,11 @@ void deleteElement(struct Shoes* *mas, int number, int *size);
 void deleteElementMenu( int* size, struct Shoes** mas);
 
 
-void sortOneFieldMenu( int* size, struct Shoes* mas);
+void sortOneFieldMenu( const int* size, struct Shoes* mas);
 void sortOneField(struct Shoes* mas, int size, int choise1);
 
 
-void sortTwoFieldMenu(int* size, struct Shoes* mas);
+void sortTwoFieldMenu(const int* size, struct Shoes* mas);
 
 void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2);
 

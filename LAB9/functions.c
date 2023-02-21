@@ -49,7 +49,7 @@ void menuCorrect(int* task)
 {
     while ((scanf_s("%d", task)) != 1 || *task < 1 || *task>6 || getchar() != '\n')
     {
-        printf("Make right choise(1-5):");
+        printf("Make right choise(1-6):");
         rewind(stdin);
     }
 }
@@ -527,7 +527,7 @@ void sortOneField(struct Shoes* mas,int size,int choise1)
             }
 }
 
-void sortOneFieldMenu( int* size, struct Shoes* mas)
+void sortOneFieldMenu( const int* size, struct Shoes* mas)
 {
     int choise = 0;
     printf("By what field do you want to sort?(Brend(0)/Name(1)/Price(2)).\nYour choise:");
@@ -623,7 +623,11 @@ enum firm inputBrend()
         }
     }
 
-    return ChekerBrend(str);
+    if (str != NULL)
+    {
+        return ChekerBrend(str);
+    }
+    return NO_BREND;
 }
 
 enum firm ChekerBrend(const char* str)
@@ -697,7 +701,7 @@ void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2)
             }
 }
 
-void sortTwoFieldMenu(int* size, struct Shoes* mas)
+void sortTwoFieldMenu(const int* size, struct Shoes* mas)
 {
     int choise1 = 0;
     int choise2 = 0;
