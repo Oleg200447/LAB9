@@ -423,7 +423,7 @@ void getName(FILE* site, struct Shoes* mas)
     
 }
 
-void showCatalog(int* size, struct Shoes* mas)
+void showCatalog(const int* size, const struct Shoes* mas)
 {
     printf("\tName:\t\t\t\t\t\tBrend:\t\t\tPrice:\n\n");
     for (int i = 0; i < *size; i++)
@@ -432,26 +432,27 @@ void showCatalog(int* size, struct Shoes* mas)
         if (mas != NULL)
         {
             fputs(mas[i].model, stdout);
-            if (strlen(mas[i].model) <= 7)
+            int len = strlen(mas[i].model);
+            if (len <= 7)
                 printf("\t\t\t\t\t\t");
-            if (strlen(mas[i].model) >= 16 && strlen(mas[i].model) < 24)
+            if (len >= 16 && len < 24)
                 printf("\t\t\t\t");
-            if (strlen(mas[i].model) < 16 && strlen(mas[i].model) > 7)
+            if (len < 16 && len > 7)
                 printf("\t\t\t\t\t");
-            if (strlen(mas[i].model) >= 24 && strlen(mas[i].model) < 27)
+            if (len >= 24 && len < 27)
                 printf("\t\t\t");
-            if (strlen(mas[i].model) >= 27 && strlen(mas[i].model) < 30)
+            if (len >= 27 && len < 30)
                 printf("\t\t\t");
-            if (strlen(mas[i].model) >= 30 && strlen(mas[i].model) < 40)
+            if (len >= 30 && len < 40)
                 printf("\t\t");
-            if (strlen(mas[i].model) >= 40)
+            if (len >= 40)
                 printf("\t");
 
             const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","Nobrend" };
-            if(mas[i].brend>=0 && mas[i].brend< NUM_BRENDS)
-            printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
-
-
+            if (mas[i].brend >= 0 && mas[i].brend < NUM_BRENDS)
+            {
+                printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
+            }
             printf("%dð.\n\n", mas[i].price);
         }
     }
@@ -479,7 +480,7 @@ void deleteElement(struct Shoes**mas, int number,int *size)
     }
 }
 
-int changeNeed(char* str1, char* str2)
+int changeNeed(const char* str1, const char* str2)
 {
     size_t size;
     if (strlen(str1) > strlen(str2))
@@ -516,7 +517,7 @@ void getInfo(struct Shoes* mas)
 
 void sortOneField(struct Shoes* mas,int size,int choise1)
 {
-    for (int i = 0; i < (size); i++)
+    for (int i = 0; i < size; i++)
         for (int j = 0; j < size - 1; j++)
             if (variantToSort(choise1, j, mas) == 1 )
             {
@@ -625,7 +626,7 @@ enum firm inputBrend()
     return ChekerBrend(str);
 }
 
-enum firm ChekerBrend(char* str)
+enum firm ChekerBrend(const char* str)
 {
     const static char* BrendForInput[NUM_BRENDS - 1] = { "adidas","nike","puma" };
 
@@ -653,9 +654,13 @@ int variantToSort(int field, int counter, struct Shoes* mas)
     if (field == FIRST_FIELD)
     {
         if (mas[counter].brend > mas[counter + 1].brend)
-        return NEED_CHANGE;
+        {
+            return NEED_CHANGE;
+        }
         if (mas[counter].brend == mas[counter + 1].brend)
-        return EQUAL;
+        {
+            return EQUAL;
+        }
     }
 
     if (field == SECOND_FIELD)
@@ -667,9 +672,13 @@ int variantToSort(int field, int counter, struct Shoes* mas)
     if (field == THIRD_FIELD)
     {
         if (mas[counter].price > mas[counter + 1].price)
+        {
             return NEED_CHANGE;
+        }
         if (mas[counter].price == mas[counter + 1].price)
+        {
             return EQUAL;
+        }
 
     }
 
@@ -678,7 +687,7 @@ int variantToSort(int field, int counter, struct Shoes* mas)
 
 void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2)
 {
-    for (int i = 0; i < (size); i++)
+    for (int i = 0; i < size; i++)
         for (int j = 0; j < size - 1; j++)
             if (variantToSort(choise1, j, mas) == 1 || (variantToSort(choise1, j, mas) == 2 && variantToSort(choise2, j, mas) == 1))
             {
@@ -690,7 +699,8 @@ void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2)
 
 void sortTwoFieldMenu(int* size, struct Shoes* mas)
 {
-    int choise1 = 0, choise2 = 0;
+    int choise1 = 0;
+    int choise2 = 0;
     printf("Choose first and second fields:(Brend(0)/Name(1)/Price(2)).\n");
     printf("First choise:");
     correctChoiseForSort(&choise1);
