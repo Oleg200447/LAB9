@@ -290,7 +290,9 @@ char* findStr(FILE* site)
 
 enum firm findFirm(FILE *site)
 {
-    char storer = fgetc(site);
+    int storer = fgetc(site);
+    char char_storer = storer;
+
     while (storer != '>')
         storer = fgetc(site);
   
