@@ -68,7 +68,7 @@ void correctChoiseForSortTwoFields(int num1,int *num2)
 
 void correctChoiseDelete(int *num,int size)
 {
-    while ( scanf_s("%d", num) != 1 || *num < 1 || *num>size || getchar() != '\n')
+    while ( scanf_s("%u", num) != 1 || *num < 1 || *num>size || getchar() != '\n')
     {
         printf("Make right choise(1-%d):",size);
         rewind(stdin);
@@ -541,7 +541,7 @@ void sortOneFieldMenu( int* size, struct Shoes* mas)
 
 void deleteElementMenu( int* size, struct Shoes**mas)
 {
-    int num = 0;
+    unsigned int num = 0;
     printf("What pair you want delete?\nYour choise(1-%d):",*size);
     correctChoiseDelete(&num, *size);
 
