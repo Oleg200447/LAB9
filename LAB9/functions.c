@@ -152,7 +152,7 @@ int numOfShoes(void)
 
         while (!feof(site))
         {
-            char storer = fgetc(site);
+            char storer =(char) fgetc(site);
 
             if (storer == *class_site && chekerForClass(class_site, site) == strlen(class_site))
             {              
@@ -186,7 +186,7 @@ struct Shoes* memoryForCatalog(int size)
 int chekerForClass( const char* str, FILE* site)
 {
     int cheker = 1;
-    char storer = fgetc(site);
+    char storer =(char) fgetc(site);
 
     while (storer == *(str + cheker) || storer == ' ' || storer == '\0' || storer == '\n')
     {
@@ -196,7 +196,7 @@ int chekerForClass( const char* str, FILE* site)
         }
 
         cheker++;
-        storer = fgetc(site);
+        storer = (char)fgetc(site);
     }
 
     return cheker;
@@ -214,11 +214,11 @@ enum firm {
 
 int findPrice(FILE* site)
 {
-    char storer = fgetc(site);
+    char storer =(char) fgetc(site);
 
     while (storer != '>')
-        storer = fgetc(site);
-    storer = fgetc(site);
+        storer =(char) fgetc(site);
+    storer =(char) fgetc(site);
 
     int price_rev = 0;
     int size_price = 0;
@@ -230,7 +230,7 @@ int findPrice(FILE* site)
 
         size_price++;
 
-        storer = fgetc(site);
+        storer = (char)fgetc(site);
     }
 
     price = reverseNum(price_rev, size_price);
@@ -249,7 +249,7 @@ void getPrices(struct Shoes* mas, FILE* site)
 
     while (!feof(site))
     {
-        char storer = fgetc(site);
+        char storer =(char) fgetc(site);
 
         if (storer == *class_sale && chekerForClass(class_sale, site) == strlen(class_sale))
         {           
@@ -264,7 +264,7 @@ char* findStr(FILE* site)
 {
     char* str = (char*)calloc(KB, sizeof(char));
     
-    char  storer = fgetc(site);
+    char  storer = (char)fgetc(site);
 
 
     int counter = 0;
@@ -275,7 +275,7 @@ char* findStr(FILE* site)
             *(str + counter) = storer;
         }
         counter++;
-        storer = fgetc(site);
+        storer =(char) fgetc(site);
 
     }
 
@@ -290,15 +290,13 @@ char* findStr(FILE* site)
 
 enum firm findFirm(FILE *site)
 {
-    char storer;
-    if (fgetc(site) != EOF)
-    {
-        fseek(site, -1, SEEK_CUR);
-        storer = fgetc(site);
-    }
+    
+   
+    char storer =(char) fgetc(site);
+
 
     while (storer != '>')
-        storer = fgetc(site);
+        storer = (char)fgetc(site);
   
     const static char* Brends[] = { "adidas","Nike","PUMA"};
     char* str = findStr(site);
@@ -326,7 +324,7 @@ void getFirms(FILE* site, struct Shoes* mas)
 
     while (!feof(site))
     {
-        char storer = fgetc(site);
+        char storer =(char) fgetc(site);
 
         if (storer == *brand_name_class && chekerForClass(brand_name_class, site) == strlen(brand_name_class))
         {         
@@ -358,6 +356,10 @@ void chekerBadCod(char** str,int *size)
                 *size -= cheker;
             }
        }
+       if ((*size) == 0)
+       {
+           (*size)++;
+       }
        char* storer = (char*)realloc(*str, ( * size) * sizeof(char));
        if (storer != NULL)
        {
@@ -368,9 +370,9 @@ void chekerBadCod(char** str,int *size)
 
 char* findName(FILE* site,int counter, struct Shoes* mas)
 {
-    char storer = fgetc(site);
+    char storer =(char) fgetc(site);
     while (!((storer >= 'a' && storer <= 'z') || (storer >= 'A' && storer <= 'Z')||(storer>='0'&&storer<='9')))
-        storer = fgetc(site);
+        storer =(char) fgetc(site);
    
     fseek(site, -1, SEEK_CUR);
     char* str;
@@ -381,17 +383,17 @@ char* findName(FILE* site,int counter, struct Shoes* mas)
     while (storer != '<')
     {
         size++;  
-        storer = fgetc(site);
+        storer =(char) fgetc(site);
     }
     str = memoryForNames(size);
     fsetpos(site, &pos);
 
-    storer = fgetc(site);
+    storer =(char) fgetc(site);
     for(int i=0;i<size-1;i++)
     {
         *(str + i) = storer;
 
-        storer = fgetc(site);
+        storer =(char) fgetc(site);
     }
     chekerBadCod(&str, & size);
     mas[counter].model = memoryForNames(size);
@@ -409,7 +411,7 @@ void getName(FILE* site, struct Shoes* mas)
 
     while (!feof(site))
     {
-        char storer = fgetc(site);
+        char storer =(char) fgetc(site);
 
         if (storer == *type_name_class && chekerForClass(type_name_class, site) == strlen(type_name_class))
         {         
@@ -468,11 +470,7 @@ void deleteElement(struct Shoes**mas, int number,int *size)
         
         for (int i = number; i < *size; i++)
         {
-            if (i < 60)
-            {
-
-                mas[0][i - 1] = mas[0][i];
-            }
+            mas[0][i - 1] = mas[0][i];
         }
         
         (*size)--;
