@@ -458,7 +458,7 @@ void showName(const struct Shoes* mas,int counter)
         printf("\t");
 }
 
-void deleteElement(struct Shoes**mas, int number,int *size)
+void deleteElement(struct Shoes**mas,unsigned int number,int *size)
 {
     if (mas != NULL)
     {
@@ -623,11 +623,9 @@ enum firm inputBrend()
         }
     }
 
-    if (str != NULL)
-    {
-        return ChekerBrend(str);
-    }
-    return NO_BREND;
+    enum firm res= ChekerBrend(str);
+    free(str);
+    return res;      
 }
 
 enum firm ChekerBrend(const char* str)

@@ -35,7 +35,7 @@ int chekerEndSite(FILE* site);
 void showCatalog(const int *size, const struct Shoes* mas);
 
 
-void deleteElement(struct Shoes* *mas, int number, int *size);
+void deleteElement(struct Shoes* *mas, unsigned int number, int *size);
 
 void deleteElementMenu( int* size, struct Shoes** mas);
 
