@@ -55,3 +55,5 @@ int variantToSort(int field, int counter, struct Shoes* mas);
 enum firm inputBrend();
 
 enum firm ChekerBrend(char* str);
+
+void chekerBadCod(char** str, int* size);

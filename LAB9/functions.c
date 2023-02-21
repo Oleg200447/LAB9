@@ -119,7 +119,7 @@ int chekerEndSite(FILE* site)
 {
     fgetc(site);
 
-    if (feof(site)==NULL)
+    if (feof(site))
     {
         return 1;
     }
@@ -153,12 +153,9 @@ int numOfShoes(void)
 
             char storer = fgetc(site);
 
-            if (storer == *class_site)
-            {
-                if (chekerForClass(class_site, site) == strlen(class_site))
-                {
-                    size++;
-                }
+            if (storer == *class_site && chekerForClass(class_site, site) == strlen(class_site))
+            {              
+                    size++;               
             }
         }
         fclose(site);
@@ -222,7 +219,9 @@ int findPrice(FILE* site)
         storer = fgetc(site);
     storer = fgetc(site);
 
-    int price_rev = 0, size_price = 0, price = 0;
+    int price_rev = 0;
+    int size_price = 0;
+    int price = 0;
 
     while (storer != '.')
     {
@@ -239,8 +238,6 @@ int findPrice(FILE* site)
 
 }
 
-
-
 void getPrices(struct Shoes* mas, FILE* site)
 {
     const char* class_sale = "x-product-card-description__price-WEB8507_price_no_bold";
@@ -253,13 +250,11 @@ void getPrices(struct Shoes* mas, FILE* site)
     {
         char storer = fgetc(site);
 
-        if (storer == *class_sale)
+        if (storer == *class_sale && chekerForClass(class_sale, site) == strlen(class_sale))
         {           
-            if (chekerForClass(class_sale, site) == strlen(class_sale))
-            {
-                mas[num_shoes_counter].price = findPrice(site);
-                num_shoes_counter++;              
-            }          
+            mas[num_shoes_counter].price = findPrice(site);
+            num_shoes_counter++;              
+                   
         }
     }
 }
@@ -337,6 +332,40 @@ void getFirms(FILE* site, struct Shoes* mas)
     }
 }
 
+void chekerBadCod(char** str,int *size)
+{
+   
+    if (*str != NULL)
+    {
+        for (int i = 0; i < *size+1; i++)
+        {
+            if (*(*str + i) == '&')
+            {
+                int cheker = 1;
+                int counter = i;
+                while (*(*str + counter) != ';' && counter < *size+1)
+                {
+                    counter++;
+                    cheker++;
+                }
+                if (*(*str + counter) != ';')
+                    break;
+                for (int j = i; j < *size+1; j++)
+                {
+                    *(*str + j) = *(*str + j + cheker);
+                }
+                *size -= cheker;
+                char* storer = (char*)realloc(*str, (*size) * sizeof(char));
+                if (storer != NULL)
+                {
+                    *str = storer;
+                }
+            }
+
+        }
+    }
+
+}
 char* findName(FILE* site,int counter, struct Shoes* mas)
 {
     char storer = fgetc(site);
@@ -354,9 +383,7 @@ char* findName(FILE* site,int counter, struct Shoes* mas)
         size++;  
         storer = fgetc(site);
     }
-
     str = memoryForNames(size);
-    mas[counter].model= memoryForNames(size);
     fsetpos(site, &pos);
 
     storer = fgetc(site);
@@ -366,7 +393,8 @@ char* findName(FILE* site,int counter, struct Shoes* mas)
 
         storer = fgetc(site);
     }
-    
+    chekerBadCod(&str, & size);
+    mas[counter].model = memoryForNames(size);
     return str;
 }
 
@@ -419,7 +447,7 @@ void showCatalog(int* size, struct Shoes* mas)
             if (strlen(mas[i].model) >= 40)
                 printf("\t");
 
-            const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","No brend" };
+            const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","Nobrend" };
             if(mas[i].brend>=0 && mas[i].brend< NUM_BRENDS)
             printf("%s\t\t\t", BrendForPrint[mas[i].brend]);
 
