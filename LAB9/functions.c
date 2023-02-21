@@ -68,7 +68,7 @@ void correctChoiseForSortTwoFields(int num1,int *num2)
 
 void correctChoiseDelete(int *num,int size)
 {
-    while ( scanf_s("%u", num) != 1 || *num < 1 || *num>size || getchar() != '\n')
+    while ( scanf_s("%u", num) < 1 || *num < 1 || *num>size || getchar() != '\n')
     {
         printf("Make right choise(1-%d):",size);
         rewind(stdin);
