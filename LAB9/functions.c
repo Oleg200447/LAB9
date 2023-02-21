@@ -333,12 +333,9 @@ void getFirms(FILE* site, struct Shoes* mas)
 }
 
 void chekerBadCod(char** str,int *size)
-{
-   
-    if (*str != NULL)
-    {
-        for (int i = 0; i < *size+1; i++)
-        {
+{  
+       for (int i = 0; i < *size+1; i++)
+       {
             if (*(*str + i) == '&')
             {
                 int cheker = 1;
@@ -355,16 +352,13 @@ void chekerBadCod(char** str,int *size)
                     *(*str + j) = *(*str + j + cheker);
                 }
                 *size -= cheker;
-                char* storer = (char*)realloc(*str, (*size) * sizeof(char));
-                if (storer != NULL)
-                {
-                    *str = storer;
-                }
             }
-
-        }
-    }
-
+       }
+       char* storer = (char*)realloc(*str, (*size+1) * sizeof(char));
+       if (storer != NULL)
+       {
+           *str = storer;
+       }
 }
 char* findName(FILE* site,int counter, struct Shoes* mas)
 {
@@ -411,13 +405,10 @@ void getName(FILE* site, struct Shoes* mas)
     {
         char storer = fgetc(site);
 
-        if (storer == *type_name_class) 
-        {
-            if (chekerForClass(type_name_class, site) == strlen(type_name_class))
-            {
-                mas[num_shoes_counter].model = findName(site, num_shoes_counter,mas);
-                num_shoes_counter++;             
-            }
+        if (storer == *type_name_class && chekerForClass(type_name_class, site) == strlen(type_name_class))
+        {         
+            mas[num_shoes_counter].model = findName(site, num_shoes_counter,mas);
+            num_shoes_counter++;             
         }
     }
     
