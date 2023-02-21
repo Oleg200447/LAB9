@@ -15,6 +15,9 @@
 #define SECOND_FIELD 1
 #define THIRD_FIELD 2
 
+#define START_ISSUE '&'
+#define END_ISSUE ';'
+
 void chekerPrice(int* num)
 {
     while ((scanf_s("%d", num)) != 1 || getchar() != '\n' || *num < 0)
@@ -149,8 +152,6 @@ int numOfShoes(void)
 
         while (!feof(site))
         {
-            int cheker = 0;
-
             char storer = fgetc(site);
 
             if (storer == *class_site && chekerForClass(class_site, site) == strlen(class_site))
@@ -321,13 +322,10 @@ void getFirms(FILE* site, struct Shoes* mas)
     {
         char storer = fgetc(site);
 
-        if (storer == *brand_name_class) 
-        {
-            if (chekerForClass(brand_name_class, site) == strlen(brand_name_class))
-            {
-                mas[num_shoes_counter].brend = findFirm(site);
-                num_shoes_counter++;               
-            }
+        if (storer == *brand_name_class && chekerForClass(brand_name_class, site) == strlen(brand_name_class))
+        {         
+            mas[num_shoes_counter].brend = findFirm(site);
+            num_shoes_counter++;               
         }
     }
 }
@@ -336,18 +334,18 @@ void chekerBadCod(char** str,int *size)
 {  
        for (int i = 0; i < *size; i++)
        {
-            if (*(*str + i) == '&')
+            if (*(*str + i) == START_ISSUE)
             {
                 int cheker = 1;
                 int counter = i;
-                while (*(*str + counter) != ';' && counter < *size+1)
+                while (*(*str + counter) != END_ISSUE && counter < *size)
                 {
                     counter++;
                     cheker++;
                 }
-                if (*(*str + counter) != ';')
+                if (*(*str + counter) != END_ISSUE)
                     break;
-                for (int j = i; j < *size; j++)
+                for (int j = i; j < *size-cheker; j++)
                 {
                     *(*str + j) = *(*str + j + cheker);
                 }
@@ -360,6 +358,8 @@ void chekerBadCod(char** str,int *size)
            *str = storer;
        }
 }
+
+
 char* findName(FILE* site,int counter, struct Shoes* mas)
 {
     char storer = fgetc(site);
@@ -414,7 +414,7 @@ void getName(FILE* site, struct Shoes* mas)
     
 }
 
-void showCatalog(const int* size, const struct Shoes* mas)
+void showCatalog( int* size, struct Shoes* mas)
 {
     printf("\tName:\t\t\t\t\t\tBrend:\t\t\tPrice:\n\n");
     for (int i = 0; i < *size; i++)
@@ -422,22 +422,7 @@ void showCatalog(const int* size, const struct Shoes* mas)
         printf("%d.\t", i+1);
         if (mas != NULL)
         {
-            fputs(mas[i].model, stdout);
-            int len = strlen(mas[i].model);
-            if (len <= 7)
-                printf("\t\t\t\t\t\t");
-            if (len >= 16 && len < 24)
-                printf("\t\t\t\t");
-            if (len < 16 && len > 7)
-                printf("\t\t\t\t\t");
-            if (len >= 24 && len < 27)
-                printf("\t\t\t");
-            if (len >= 27 && len < 30)
-                printf("\t\t\t");
-            if (len >= 30 && len < 40)
-                printf("\t\t");
-            if (len >= 40)
-                printf("\t");
+            showName(mas, i);
 
             const static char* BrendForPrint[NUM_BRENDS] = { "Adidas","Nike","Puma","Nobrend" };
             if (mas[i].brend >= 0 && mas[i].brend < NUM_BRENDS)
@@ -447,6 +432,26 @@ void showCatalog(const int* size, const struct Shoes* mas)
             printf("%dð.\n\n", mas[i].price);
         }
     }
+}
+
+void showName(const struct Shoes* mas,int counter)
+{
+    fputs(mas[counter].model, stdout);
+    size_t len = strlen(mas[counter].model);
+    if (len <= 7)
+        printf("\t\t\t\t\t\t");
+    if (len >= 16 && len < 24)
+        printf("\t\t\t\t");
+    if (len < 16 && len > 7)
+        printf("\t\t\t\t\t");
+    if (len >= 24 && len < 27)
+        printf("\t\t\t");
+    if (len >= 27 && len < 30)
+        printf("\t\t\t");
+    if (len >= 30 && len < 40)
+        printf("\t\t");
+    if (len >= 40)
+        printf("\t");
 }
 
 void deleteElement(struct Shoes**mas, int number,int *size)
@@ -617,7 +622,7 @@ enum firm inputBrend()
     return ChekerBrend(str);
 }
 
-enum firm ChekerBrend(const char* str)
+enum firm ChekerBrend(char* str)
 {
     const static char* BrendForInput[NUM_BRENDS - 1] = { "adidas","nike","puma" };
 

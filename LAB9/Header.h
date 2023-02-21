@@ -57,3 +57,5 @@ enum firm inputBrend();
 enum firm ChekerBrend(char* str);
 
 void chekerBadCod(char** str, int* size);
+
+void showName(const struct Shoes* mas, int counter);
