@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include"Header.h"
+#include <locale.h>
 
 #define KB 1024
 #define NUM_BRENDS 4
@@ -114,20 +115,20 @@ int reverseNum(int num1, int num_size)
     return num2;
 }
 
-/*nt chekerEndSite(FILE* site)
+int chekerEndSite(FILE* site)
 {
     fgetc(site);
 
-    if (!feof(site))
-    {
-        return 0;
-        fseek(site, -1, SEEK_CUR);
-    }
-    else
+    if (feof(site)==NULL)
     {
         return 1;
     }
-}*/
+    else
+    {
+        fseek(site, -1, SEEK_CUR);
+        return 0;
+    }
+}
 
 int numOfShoes(void)
 {
@@ -149,11 +150,6 @@ int numOfShoes(void)
         while (!feof(site))
         {
             int cheker = 0;
-
-            /*if (chekerEndSite(site) == 1)
-            {
-                break;
-            }*/
 
             char storer = fgetc(site);
 
@@ -257,7 +253,7 @@ void getPrices(struct Shoes* mas, FILE* site)
     {
         char storer = fgetc(site);
 
-        if (storer == *class_sale) // x
+        if (storer == *class_sale)
         {           
             if (chekerForClass(class_sale, site) == strlen(class_sale))
             {
@@ -330,7 +326,7 @@ void getFirms(FILE* site, struct Shoes* mas)
     {
         char storer = fgetc(site);
 
-        if (storer == *brand_name_class) // <
+        if (storer == *brand_name_class) 
         {
             if (chekerForClass(brand_name_class, site) == strlen(brand_name_class))
             {
@@ -387,7 +383,7 @@ void getName(FILE* site, struct Shoes* mas)
     {
         char storer = fgetc(site);
 
-        if (storer == *type_name_class) // x
+        if (storer == *type_name_class) 
         {
             if (chekerForClass(type_name_class, site) == strlen(type_name_class))
             {
@@ -396,9 +392,10 @@ void getName(FILE* site, struct Shoes* mas)
             }
         }
     }
+    
 }
 
-void showCatalog(/*struct Shoes* mas*/int* size, struct Shoes* mas)
+void showCatalog(int* size, struct Shoes* mas)
 {
     printf("\tName:\t\t\t\t\t\tBrend:\t\t\tPrice:\n\n");
     for (int i = 0; i < *size; i++)
@@ -663,7 +660,7 @@ void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2)
             }
 }
 
-void sortTwoFieldMenu(/*struct Shoes* mas*/ int* size, struct Shoes* mas)
+void sortTwoFieldMenu(int* size, struct Shoes* mas)
 {
     int choise1 = 0, choise2 = 0;
     printf("Choose first and second fields:(Brend(0)/Name(1)/Price(2)).\n");

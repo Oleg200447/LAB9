@@ -2,6 +2,7 @@
 #include"Header.h"
 #include <locale.h>
 #include<stdlib.h>
+#include <windows.h>
 
 #define NUM_TASKS_MENU 5
 #define EXIT 6
@@ -10,13 +11,12 @@ int main()
 {   
     setlocale(LC_ALL, "Rus");
 
-    void (**menu)(/*struct Shoes* mas*/ int *size,...) =(void(**)(/*struct Shoes* mas*/ int *size,...))calloc(NUM_TASKS_MENU, sizeof(void(*)(/*struct Shoes* mas*/ int* size,...)));
+    void (**menu)(int *size,...) =(void(**)(int *size,...))calloc(NUM_TASKS_MENU, sizeof(void(*)(int* size,...)));
     if (menu != NULL)
     {
         int num_shoes = numOfShoes();
         struct Shoes* mas = memoryForCatalog(num_shoes);
         getInfo(mas);
-            
         menu[0] =showCatalog;
         menu[1] = addElementMenu;
         menu[2] = deleteElementMenu;
