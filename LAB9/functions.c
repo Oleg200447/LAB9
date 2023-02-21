@@ -334,7 +334,7 @@ void getFirms(FILE* site, struct Shoes* mas)
 
 void chekerBadCod(char** str,int *size)
 {  
-       for (int i = 0; i < *size+1; i++)
+       for (int i = 0; i < *size; i++)
        {
             if (*(*str + i) == '&')
             {
@@ -347,14 +347,14 @@ void chekerBadCod(char** str,int *size)
                 }
                 if (*(*str + counter) != ';')
                     break;
-                for (int j = i; j < *size+1; j++)
+                for (int j = i; j < *size; j++)
                 {
                     *(*str + j) = *(*str + j + cheker);
                 }
                 *size -= cheker;
             }
        }
-       char* storer = (char*)realloc(*str, (*size+1) * sizeof(char));
+       char* storer = (char*)realloc(*str, ( * size) * sizeof(char));
        if (storer != NULL)
        {
            *str = storer;
