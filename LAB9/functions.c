@@ -418,7 +418,7 @@ void getName(FILE* site, struct Shoes* mas)
     
 }
 
-void showCatalog( int* size, struct Shoes* mas)
+void showCatalog(const int* size, const struct Shoes* mas)
 {
     printf("\tName:\t\t\t\t\t\tBrend:\t\t\tPrice:\n\n");
     for (int i = 0; i < *size; i++)
@@ -626,7 +626,7 @@ enum firm inputBrend()
     return ChekerBrend(str);
 }
 
-enum firm ChekerBrend(char* str)
+enum firm ChekerBrend(const char* str)
 {
     const static char* BrendForInput[NUM_BRENDS - 1] = { "adidas","nike","puma" };
 
@@ -649,7 +649,7 @@ enum firm ChekerBrend(char* str)
     return NO_BREND;
 }
 
-int variantToSort(int field, int counter, struct Shoes* mas)
+int variantToSort(int field, int counter,const struct Shoes* mas)
 {
     if (field == FIRST_FIELD)
     {

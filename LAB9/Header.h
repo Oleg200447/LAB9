@@ -32,7 +32,7 @@ void chekerForContinue(int* num);
 
 int chekerEndSite(FILE* site);
 
-void showCatalog(int *size, struct Shoes* mas);
+void showCatalog(const int *size, const struct Shoes* mas);
 
 
 void deleteElement(struct Shoes* *mas, int number, int *size);
@@ -50,11 +50,11 @@ void sortTwoField(struct Shoes* mas, int size, int choise1, int choise2);
 
 void addElementMenu(int* size, struct Shoes** mas);
 
-int variantToSort(int field, int counter, struct Shoes* mas);
+int variantToSort(int field, int counter, const struct Shoes* mas);
 
 enum firm inputBrend();
 
-enum firm ChekerBrend(char* str);
+enum firm ChekerBrend(const char* str);
 
 void chekerBadCod(char** str, int* size);
 
