@@ -68,7 +68,7 @@ void correctChoiseForSortTwoFields(int num1,int *num2)
 
 void correctChoiseDelete(int *num,int size)
 {
-    while ((scanf_s("%d", num)) != 1 || *num < 1 || *num>size || getchar() != '\n')
+    while ( scanf_s("%d", num) != 1 || *num < 1 || *num>size || getchar() != '\n')
     {
         printf("Make right choise(1-%d):",size);
         rewind(stdin);
@@ -289,12 +289,8 @@ char* findStr(FILE* site)
 }
 
 enum firm findFirm(FILE *site)
-{
-    
-   
+{  
     char storer =(char) fgetc(site);
-
-
     while (storer != '>')
         storer = (char)fgetc(site);
   
